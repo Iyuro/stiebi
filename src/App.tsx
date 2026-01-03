@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
+
 import Index from "./pages/Index";
 import ProgramDetail from "./pages/ProgramDetail";
 import Auth from "./pages/Auth";
@@ -12,8 +13,6 @@ import NotFound from "./pages/NotFound";
 import AdminEvents from "./pages/AdminEvents";
 import AdminNews from "./pages/AdminNews";
 import NewsDetail from "./pages/NewsDetail";
-
-
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -24,18 +23,21 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-  <Route path="/" element={<Index />} />
-  <Route path="/auth" element={<Auth />} />
+            {/* Public */}
+            <Route path="/" element={<Index />} />
+            <Route path="/program/:slug" element={<ProgramDetail />} />
+            <Route path="/news/:id" element={<NewsDetail />} />
+            {/* Auth */}
+            <Route path="/auth" element={<Auth />} />
 
-  <Route path="/admin" element={<Admin />} />
-  <Route path="/admin/news" element={<AdminNews />} />
-  <Route path="/admin/events" element={<AdminEvents />} />
+            {/* Admin */}
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/news" element={<AdminNews />} />
+            <Route path="/admin/events" element={<AdminEvents />} />
 
-  <Route path="/news/:id" element={<NewsDetail />} />
-
-  <Route path="*" element={<NotFound />} />
-</Routes>
-
+            {/* Fallback */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </BrowserRouter>
       </AuthProvider>
     </TooltipProvider>
